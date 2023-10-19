@@ -17,29 +17,24 @@ print("LOADING DATA, WAIT.......\n\n\n")
 #Load Train and Test Excel files
 train_df = pd.read_excel("m3train.xlsx")
 test_df = pd.read_excel("m3test.xlsx")
-X_train = train_df.iloc[:,5:] #Training
-y_train = train_df.iloc[:,4:5]
+X_train = train_df.iloc[:,3:] #Training
+y_train = train_df.iloc[:,2:3]
 #print("Training data\n\n\n\n", X_train)
 #print("Training labels\n\n\n\n", y_train)
 
 
-X_test = test_df.iloc[:,5:]
-X_test_raw = test_df.iloc[:,5:]
-y_test = test_df.iloc[:,4:5]
-y_test_raw = test_df.iloc[:,4:5]
+X_test = test_df.iloc[:,3:]
+X_test_raw = test_df.iloc[:,3:]
+y_test = test_df.iloc[:,2:3]
+y_test_raw = test_df.iloc[:,2:3]
 
-#print("Testing data\n\n\n", X_test)
-#print("Testing labels\n\n\n", y_test)
-#print("Raw Testing Testing data\n\n\n", X_test_raw)
-#print("Raw Testing labels\n\n\n", y_test_raw)
-#sys.exit()
 
 #Validation_set
 valid= train_df[train_df['Year'] == 2021]
-dvalid_data = valid.iloc[:,5:]
-dvalid_label = valid.iloc[:,4:5]
+dvalid_data = valid.iloc[:,3:]
+dvalid_label = valid.iloc[:,2:3]
 features = train_df.columns
-myfeatures = features[5:]
+myfeatures = features[3:]
 
 dvalid = xgb.DMatrix(dvalid_data, label=dvalid_label, missing=-999.0, feature_names=myfeatures) #validation set
 #print("Validation data\n", dvalid_data)
