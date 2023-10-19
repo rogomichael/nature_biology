@@ -1,2 +1,2 @@
 #Ignore all jupyter checkpoints
-*.ipynb_checkpoints
+*script_images/.ipynb_checkpoints
