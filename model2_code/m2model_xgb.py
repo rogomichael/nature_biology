@@ -8,8 +8,6 @@ import matplotlib.pyplot as plt
 from collections import Counter 
 import os
 import sys
-import optuna
-
 
 path=os.getcwd()
 #print(path)
@@ -20,19 +18,18 @@ train_df = pd.read_excel("m2train.xlsx")
 test_df = pd.read_excel("m2test.xlsx")
 X_train = train_df.iloc[:,5:] #Training
 y_train = train_df.iloc[:,4:5]
-print("Training data\n\n\n\n", X_train)
-print("Training labels\n\n\n\n", y_train)
-
+#print("Training data\n\n\n\n", X_train)
+#print("Training labels\n\n\n\n", y_train)
 
 X_test = test_df.iloc[:,3:]
 X_test_raw = test_df.iloc[:,3:]
 y_test = test_df.iloc[:,2:3]
 y_test_raw = test_df.iloc[:,2:3]
 
-print("Testing data\n\n\n", X_test)
-print("Testing labels\n\n\n", y_test)
-print("Raw Testing Testing data\n\n\n", X_test_raw)
-print("Raw Testing labels\n\n\n", y_test_raw)
+#print("Testing data\n\n\n", X_test)
+#print("Testing labels\n\n\n", y_test)
+#print("Raw Testing Testing data\n\n\n", X_test_raw)
+#print("Raw Testing labels\n\n\n", y_test_raw)
 #sys.exit()
 
 #Validation_set
@@ -42,25 +39,18 @@ dvalid_label = valid.iloc[:,2:3]
 features = train_df.columns
 myfeatures = features[3:]
 
-dvalid = xgb.DMatrix(dvalid_data, label=dvalid_label, missing=-999.0, feature_names=myfeatures) #validation set
-#print("Validation data\n", dvalid_data)
-#print("Validation label\n", dvalid_label)
-#sys.exit()
-#First we have to convert these values to XgbDMatrix
-#Training set
-dtrain = xgb.DMatrix(X_train, label=y_train, missing=-999.0, feature_names=myfeatures) # = xgb.DMatrix(y_train)
-#Validation set
-dtest = xgb.DMatrix(X_test, label=y_test, missing=-999.0, feature_names=myfeatures) # = xgb.DMatrix(y_test)
+#validation DMatrix
+dvalid = xgb.DMatrix(dvalid_data, label=dvalid_label, missing=-999.0, feature_names=myfeatures) 
+dtrain = xgb.DMatrix(X_train, label=y_train, missing=-999.0, feature_names=myfeatures) 
+dtest = xgb.DMatrix(X_test, label=y_test, missing=-999.0, feature_names=myfeatures)
 #Test set
 X_test = xgb.DMatrix(X_test)
 y_test = xgb.DMatrix(y_test)
 print("Data Preparation succesful.....\n")
 print("Moving on to do computation....\n")
-#sys.exit()
 
 #Get the labels and scale the data
 label = dtrain.get_label()
-#disable scaling
 ratio = float(np.sum(label == 0)) / np.sum(label == 1)
 base_params = {
 	'verbosity': 0,
