@@ -36,15 +36,9 @@ dvalid_label = valid.iloc[:,2:3]
 features = train_df.columns
 myfeatures = features[3:]
 
-dvalid = xgb.DMatrix(dvalid_data, label=dvalid_label, missing=-999.0, feature_names=myfeatures) #validation set
-#print("Validation data\n", dvalid_data)
-#print("Validation label\n", dvalid_label)
-#sys.exit()
-#First we have to convert these values to XgbDMatrix
-#Training set
-dtrain = xgb.DMatrix(X_train, label=y_train, missing=-999.0, feature_names=myfeatures) # = xgb.DMatrix(y_train)
-#Validation set
-dtest = xgb.DMatrix(X_test, label=y_test, missing=-999.0, feature_names=myfeatures) # = xgb.DMatrix(y_test)
+dvalid = xgb.DMatrix(dvalid_data, label=dvalid_label, missing=-999.0, feature_names=myfeatures) 
+dtrain = xgb.DMatrix(X_train, label=y_train, missing=-999.0, feature_names=myfeatures)
+dtest = xgb.DMatrix(X_test, label=y_test, missing=-999.0, feature_names=myfeatures)
 #Test set
 X_test = xgb.DMatrix(X_test)
 y_test = xgb.DMatrix(y_test)
@@ -54,7 +48,6 @@ print("Moving on to do computation....\n")
 
 #Get the labels and scale the data
 label = dtrain.get_label()
-#disable scaling
 ratio = float(np.sum(label == 0)) / np.sum(label == 1)
 base_params = {
 	'verbosity': 0,
