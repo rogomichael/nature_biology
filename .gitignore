@@ -1,2 +1,3 @@
 #Ignore all jupyter checkpoints
 *script_images/.ipynb_checkpoints
+*.xlsx
